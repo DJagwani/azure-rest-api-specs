@@ -108,7 +108,7 @@
           {
             "name": "operationId",
             "in": "path",
-            "description": "Operation Id",
+            "description": "The unique ID of the operation.",
             "required": true,
             "type": "string"
           }
@@ -117,7 +117,26 @@
           "200": {
             "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/OperationStatus"
+              "type": "object",
+              "description": "Provides status details for long running operations.",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The unique ID of the operation."
+                },
+                "status": {
+                  "$ref": "#/definitions/Azure.Core.Foundations.OperationState",
+                  "description": "The status of the operation"
+                },
+                "error": {
+                  "$ref": "#/definitions/Azure.Core.Foundations.Error",
+                  "description": "Error object that describes the error when status is \"Failed\"."
+                }
+              },
+              "required": [
+                "id",
+                "status"
+              ]
             }
           },
           "default": {
@@ -590,7 +609,26 @@
           "202": {
             "description": "The request has been accepted for processing, but processing has not yet completed.",
             "schema": {
-              "$ref": "#/definitions/OperationStatus"
+              "type": "object",
+              "description": "Provides status details for long running operations.",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The unique ID of the operation."
+                },
+                "status": {
+                  "$ref": "#/definitions/Azure.Core.Foundations.OperationState",
+                  "description": "The status of the operation"
+                },
+                "error": {
+                  "$ref": "#/definitions/Azure.Core.Foundations.Error",
+                  "description": "Error object that describes the error when status is \"Failed\"."
+                }
+              },
+              "required": [
+                "id",
+                "status"
+              ]
             },
             "headers": {
               "Location": {
@@ -684,8 +722,26 @@
                   "description": "Error object that describes the error when status is \"Failed\"."
                 },
                 "result": {
-                  "$ref": "#/definitions/OperationStatus",
-                  "description": "The result of the operation."
+                  "type": "object",
+                  "description": "The result of the operation.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of the operation."
+                    },
+                    "status": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.OperationState",
+                      "description": "The status of the operation"
+                    },
+                    "error": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.Error",
+                      "description": "Error object that describes the error when status is \"Failed\"."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "status"
+                  ]
                 }
               },
               "required": [
@@ -788,8 +844,26 @@
                   "description": "Error object that describes the error when status is \"Failed\"."
                 },
                 "result": {
-                  "$ref": "#/definitions/OperationStatus",
-                  "description": "The result of the operation."
+                  "type": "object",
+                  "description": "The result of the operation.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of the operation."
+                    },
+                    "status": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.OperationState",
+                      "description": "The status of the operation"
+                    },
+                    "error": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.Error",
+                      "description": "Error object that describes the error when status is \"Failed\"."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "status"
+                  ]
                 }
               },
               "required": [
@@ -885,8 +959,26 @@
                   "description": "Error object that describes the error when status is \"Failed\"."
                 },
                 "result": {
-                  "$ref": "#/definitions/OperationStatus",
-                  "description": "The result of the operation."
+                  "type": "object",
+                  "description": "The result of the operation.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of the operation."
+                    },
+                    "status": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.OperationState",
+                      "description": "The status of the operation"
+                    },
+                    "error": {
+                      "$ref": "#/definitions/Azure.Core.Foundations.Error",
+                      "description": "Error object that describes the error when status is \"Failed\"."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "status"
+                  ]
                 }
               },
               "required": [
@@ -1989,91 +2081,6 @@
             "name": "Disabled",
             "value": "Disabled",
             "description": "Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes."
-          }
-        ]
-      }
-    },
-    "OperationStatus": {
-      "type": "object",
-      "description": "The current status of an async operation",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Fully qualified ID for the operation status."
-        },
-        "name": {
-          "type": "string",
-          "description": "The operation id name"
-        },
-        "status": {
-          "$ref": "#/definitions/OperationStatusValue",
-          "description": "Provisioning state of the resource."
-        },
-        "resourceId": {
-          "type": "string",
-          "description": "The id of the resource."
-        },
-        "startTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The start time of the operation"
-        },
-        "endTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The end time of the operation"
-        },
-        "percentComplete": {
-          "type": "number",
-          "format": "double",
-          "description": "Percent of the operation that is complete",
-          "minimum": 0,
-          "maximum": 100
-        },
-        "properties": {
-          "description": "Custom operation properties, populated only for a successful operation."
-        },
-        "error": {
-          "$ref": "#/definitions/Azure.Core.Foundations.Error",
-          "description": "Operation Error message"
-        }
-      },
-      "required": [
-        "status"
-      ]
-    },
-    "OperationStatusValue": {
-      "type": "string",
-      "description": "Indicates whether operation status is running, completed, canceled or failed.",
-      "enum": [
-        "Running",
-        "Completed",
-        "Canceled",
-        "Failed"
-      ],
-      "x-ms-enum": {
-        "name": "OperationStatusValue",
-        "modelAsString": true,
-        "values": [
-          {
-            "name": "Running",
-            "value": "Running",
-            "description": "Operation is in progress"
-          },
-          {
-            "name": "Completed",
-            "value": "Completed",
-            "description": "Operation is completed with success"
-          },
-          {
-            "name": "Canceled",
-            "value": "Canceled",
-            "description": "Operation was canceled"
-          },
-          {
-            "name": "Failed",
-            "value": "Failed",
-            "description": "Operation failed"
           }
         ]
       }
