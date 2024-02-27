@@ -908,8 +908,7 @@
       "properties": {
         "parameters": {
           "type": "object",
-          "description": "Parameters object for the environment.",
-          "additionalProperties": {}
+          "description": "Parameters object for the environment."
         },
         "name": {
           "type": "string",
@@ -1206,8 +1205,7 @@
       "properties": {
         "parameters": {
           "type": "object",
-          "description": "Parameters object for the environment.",
-          "additionalProperties": {}
+          "description": "Parameters object for the environment."
         }
       }
     },
